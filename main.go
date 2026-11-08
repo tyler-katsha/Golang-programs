@@ -1,15 +1,16 @@
-package api
+package main
 
 import (
 	"fmt"
 	"net/http"
+
 	"github.com/go-chi/chi"
-	"github.com/tyler-katsha/Golang-programs/internal/handlers"
 	log "github.com/sirupsen/logrus"
+	"github.com/tyler-katsha/Golang-programs/internal/handlers"
 )
 
 func main(){
-	log.setReportCaller(true)
+	log.SetReportCaller(true)
 
 	var r *chi.Mux = chi.NewRouter()
 	handlers.Handler(r)
@@ -26,4 +27,9 @@ func main(){
  
 	`)
 
+	err := http.ListenAndServe("localhost:8000",r)
+
+	if err != nil {
+		log.Error(err)
+	}
 }
